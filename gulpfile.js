@@ -15,6 +15,7 @@ const sass = require("gulp-sass");
 // Load package.json for banner
 const pkg = require('./package.json');
 
+
 // Set the banner content
 const banner = ['/*!\n',
   ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
@@ -23,6 +24,7 @@ const banner = ['/*!\n',
   ' */\n',
   '\n'
 ].join('');
+
 
 // BrowserSync
 function browserSync(done) {
@@ -74,6 +76,31 @@ function modules() {
   return merge(bootstrap, fontAwesomeCSS, fontAwesomeWebfonts, jquery, jqueryEasing, simpleLineIconsFonts, simpleLineIconsCSS);
 }
 
+// recompile base boostrap CSS task
+function rebuild_base() {
+  return gulp
+    .src("./node_modules/bootstrap/scss/*.scss")
+    .pipe(plumber())
+    .pipe(sass({
+      outputStyle: "expanded",
+      includePaths: "./node_modules/bootstrap/**.*",
+    }))
+    .on("error", sass.logError)
+    .pipe(autoprefixer({
+      cascade: false
+    }))
+    .pipe(header(banner, {
+      pkg: pkg
+    }))
+    .pipe(gulp.dest("./node_modules/bootstrap/dist/css"))
+    .pipe(rename({
+      suffix: ".min"
+    }))
+    .pipe(cleanCSS())
+    .pipe(gulp.dest("./node_modules/bootstrap/dist/css"))
+    .pipe(browsersync.stream());
+}
+
 // CSS task
 function css() {
   return gulp
@@ -108,12 +135,14 @@ function watchFiles() {
 // Define complex tasks
 const vendor = gulp.series(clean, modules);
 const build = gulp.series(vendor, css);
+const build_base = gulp.series(rebuild_base, vendor);
 const watch = gulp.series(build, gulp.parallel(watchFiles, browserSync));
-
 // Export tasks
+exports.build_base = build_base;
 exports.css = css;
 exports.clean = clean;
 exports.vendor = vendor;
 exports.build = build;
 exports.watch = watch;
+
 exports.default = build;

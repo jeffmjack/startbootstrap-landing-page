@@ -1,12 +1,32 @@
 // Core variables and mixins
-@import "variables.scss";
-@import "mixins.scss";
+@import "_variables.scss";
+@import "_mixins.scss";
 // Global CSS
-@import "global.scss";
+@import "_global.scss";
 // Components
-@import "masthead.scss";
-@import "showcase.scss";
-@import "icons.scss";
-@import "testimonials.scss";
-@import "call-to-action.scss";
-@import "footer.scss";
+@import "_masthead.scss";
+@import "_showcase.scss";
+@import "_icons.scss";
+@import "_testimonials.scss";
+@import "_call-to-action.scss";
+@import "_footer.scss";
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+{
+  color: #222223;
+  font-family: "Poppins", Arial, Tahoma, sans-serif;
+}
+.btn-primary{
+//  background-color: $green;
+
+}
+
+p {
+  font-family: "Poppins", Arial, Tahoma, sans-serif;
+}

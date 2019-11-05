@@ -124,3 +124,17 @@ footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222223;
+  font-family: "Poppins", Arial, Tahoma, sans-serif;
+}
+
+p {
+  font-family: "Poppins", Arial, Tahoma, sans-serif;
+}
